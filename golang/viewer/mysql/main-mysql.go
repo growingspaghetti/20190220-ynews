@@ -188,5 +188,5 @@ func main() {
 	// 記事本文ページが開かれたら記事本文ページ生成手へ送る
 	http.HandleFunc("/cat", cathandler)
 	// サーバーを起動
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe("127.0.0.1:8080", nil)
 }
