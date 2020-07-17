@@ -171,7 +171,7 @@ func main() {
 	// リンクとタイトルで、記事のページをダウンロードして、記事本文を抽出。ニュース記事で戻る
 	articles := getArticle(urlTitles)
 	// ニュース記事を、HTMLファイルに追加保存
-	saveArticle(articles)
+	//saveArticle(articles)
 	// ニュース記事を、全てSQLiteデータベースに投げる
 	saveArticleDB(articles)
 }
