@@ -113,8 +113,8 @@ func saveArticle(articles []article) {
 
 // リンクとタイトルで、記事のページをダウンロードして、記事本文を抽出。ニュース記事で戻る
 func getArticle(urlTitles []urlTitle) []article {
-	b := `<div class="paragraph">`
-	e := `<!-- /.ynDetailText -->`
+	b := `</header><div data-ual-view-type="detail"`
+	e := `<div class="viewableWrap">`
 	articles := make([]article, 0)
 	for _, urlTitle := range urlTitles {
 		p := get(urlTitle.url)
@@ -122,7 +122,7 @@ func getArticle(urlTitles []urlTitle) []article {
 		article := article{
 			url:      urlTitle.url,
 			title:    urlTitle.title,
-			contents: contents,
+			contents: "<div " + strings.Replace(contents, "href", "invalidated", 0),
 		}
 		articles = append(articles, article)
 		fmt.Printf("===========記事本文===========\n%s\n", contents)
@@ -160,8 +160,10 @@ func extractLinkBlock(indexPage string) []string {
 // 　ニュース記事を、HTMLファイルに追加保存
 // 　ニュース記事を、全てSQLiteデータベースに投げる
 func main() {
+	// 例 "https://headlines.yahoo.co.jp/list/?m=kyodonews"
+	indexURL := os.Args[1]
 	// 目次ページを取得
-	p := get("https://headlines.yahoo.co.jp/list/?m=kyodonews")
+	p := get(indexURL)
 	// 目次ページから、リンクとタイトルが書かれている区画を全て抽出して、列挙
 	linkBlocks := extractLinkBlock(p)
 	// リンクとタイトルが書かれている区画から、リンクとタイトルを抽出
