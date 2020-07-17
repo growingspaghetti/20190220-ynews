@@ -76,7 +76,7 @@ func get(url string) string {
 
 // ニュース記事を、全てSQLiteデータベースに投げる
 func saveArticleDB(articles []article) {
-	db, err := sql.Open("sqlite3", "./articles.db")
+	db, err := sql.Open("sqlite3", "./data/articles.db")
 	if err != nil {
 		panic(err)
 	}
@@ -98,7 +98,7 @@ func saveArticleDB(articles []article) {
 
 // ニュース記事を、HTMLファイルに追加保存
 func saveArticle(articles []article) {
-	f, err := os.OpenFile("articles.html", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600)
+	f, err := os.OpenFile("./data/articles.html", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600)
 	if err != nil {
 		panic(err)
 	}
@@ -170,6 +170,8 @@ func main() {
 	urlTitles := extractURLTitle(linkBlocks)
 	// リンクとタイトルで、記事のページをダウンロードして、記事本文を抽出。ニュース記事で戻る
 	articles := getArticle(urlTitles)
+
+	_ = os.Mkdir("data", 644)
 	// ニュース記事を、HTMLファイルに追加保存
 	//saveArticle(articles)
 	// ニュース記事を、全てSQLiteデータベースに投げる
