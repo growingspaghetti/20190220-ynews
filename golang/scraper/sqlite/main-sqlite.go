@@ -122,7 +122,7 @@ func getArticle(urlTitles []urlTitle) []article {
 		article := article{
 			url:      urlTitle.url,
 			title:    urlTitle.title,
-			contents: "<div " + strings.Replace(contents, "href", "invalidated", 0),
+			contents: "<div " + strings.Replace(contents, "href", "invalidated", -1),
 		}
 		articles = append(articles, article)
 		fmt.Printf("===========記事本文===========\n%s\n", contents)
@@ -173,7 +173,7 @@ func main() {
 
 	_ = os.Mkdir("data", 644)
 	// ニュース記事を、HTMLファイルに追加保存
-	//saveArticle(articles)
+	saveArticle(articles)
 	// ニュース記事を、全てSQLiteデータベースに投げる
 	saveArticleDB(articles)
 }
