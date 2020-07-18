@@ -11,3 +11,14 @@ ryoji@ubuntu:~/dev/20190220-ynews/golang/viewer/sqlite$ go build
 go: finding module for package github.com/mattn/go-sqlite3
 go: found github.com/mattn/go-sqlite3 in github.com/mattn/go-sqlite3 v1.14.0
 ```
+
+----
+
+```
+mkdir data
+chown 1000:1000 data
+docker-compose up
+# sqlite_scraper_1 exited with code 0
+# go to localhost:8080
+docker-compose down
+```

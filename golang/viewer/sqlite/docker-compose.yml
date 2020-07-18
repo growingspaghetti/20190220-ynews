@@ -1,0 +1,17 @@
+version: "3.3"
+
+services:
+  scraper:
+    image: ryojikodakari/ynews-mini-scraper-20200718
+    volumes:
+      - ./data:/app/data
+    command: ["https://headlines.yahoo.co.jp/list/?m=kyodonews"]
+  viewer:
+    image: ryojikodakari/ynews-mini-viewer-20200718
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/app/data
+    restart: always
+    depends_on:
+      - scraper
