@@ -41,7 +41,7 @@ func cathandler(w http.ResponseWriter, r *http.Request) {
 
 // データベースにある記事を列挙して、その目次とタイトルで戻る
 func ls() []unt {
-	rows, err := db.Query(`SELECT url,title FROM articles;`)
+	rows, err := db.Query(`SELECT url,title FROM articles ORDER BY url DESC;`)
 	if err != nil {
 		panic(err)
 	}
@@ -161,7 +161,7 @@ func fwdhandler(w http.ResponseWriter, r *http.Request) {
 // 　サーバーを起動
 func main() {
 	// データベース開く
-	db, _ = sql.Open("sqlite3", "./articles.db")
+	db, _ = sql.Open("sqlite3", "./data/articles.db")
 	defer db.Close()
 	// ルートディレクトリページが開かれたら記事一覧転送手へ送る
 	http.HandleFunc("/", fwdhandler)
